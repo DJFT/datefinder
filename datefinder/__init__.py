@@ -119,7 +119,8 @@ class DateFinder(object):
             date_string = date_string.strip(STRIP_CHARS)
             ## Match strings must be at least 3 characters long
             ## < 3 tends to be garbage
-            if len(date_string) < 6: #AC: only thing changed: 3 - > 5
+            if len(date_string) < 7: #AC: only thing changed: 3 - > 5
+                print(date_string)
                 return None
 
             try:
