@@ -104,7 +104,8 @@ class DateFinder(object):
     def parse_date_string(self, date_string, captures):
         # For well formatted string, we can already let dateutils parse them
         # otherwise self._find_and_replace method might corrupt them
-        print(date_string)
+        if len(date_string) < 5: #less than 5 gets silly answers. AC added
+            return None
         try:
             as_dt = parser.parse(
                 date_string,
@@ -118,9 +119,7 @@ class DateFinder(object):
 
             ## One last sweep after removing
             date_string = date_string.strip(STRIP_CHARS)
-            ## Match strings must be at least 3 characters long
-            ## < 3 tends to be garbage
-            if len(date_string) < 8: #AC: only thing changed: 3 - > 5
+            if len(date_string) < 5: #AC: changed: 3 - > 5
                 return None
 
             try:
