@@ -106,7 +106,6 @@ class DateFinder(object):
         # otherwise self._find_and_replace method might corrupt them
         if len(date_string) < 8: #less than 5 gets silly answers. AC added
             return None
-        print(date_string)
         try:
             as_dt = parser.parse(
                 date_string,
