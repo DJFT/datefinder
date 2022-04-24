@@ -29,13 +29,13 @@ class DateFinder(object):
         if first == "year":
             self.yearfirst = True
 
-    def find_dates(self, text, source=False, index=False, strict=False):
+    def find_dates(self, text, source=False, index=False, strict=False, show_strings=False):
 
         for date_string, indices, captures in self.extract_date_strings(
             text, strict=strict
         ):
 
-            as_dt = self.parse_date_string(date_string, captures)
+            as_dt = self.parse_date_string(date_string, captures, show_strings=show_strings)
             if as_dt is None:
                 ## Dateutil couldn't make heads or tails of it
                 ## move on to next
@@ -101,11 +101,13 @@ class DateFinder(object):
         tzinfo_match = tz.gettz(tz_string)
         return datetime_obj.replace(tzinfo=tzinfo_match)
 
-    def parse_date_string(self, date_string, captures):
+    def parse_date_string(self, date_string, captures, show_strings=False):
         # For well formatted string, we can already let dateutils parse them
         # otherwise self._find_and_replace method might corrupt them
         if len(date_string) < 8: #less than 5 gets silly answers. AC added
             return None
+        if show_strings:
+            print(date_string)
         try:
             as_dt = parser.parse(
                 date_string,
@@ -303,7 +305,7 @@ class DateFinder(object):
 
 
 def find_dates(
-    text, source=False, index=False, strict=False, base_date=None, first="month"
+    text, source=False, index=False, strict=False, base_date=None, first="month",show_strings=False
 ):
     """
     Extract datetime strings from text
@@ -337,4 +339,4 @@ def find_dates(
         or a tuple with the source text and index, if requested
     """
     date_finder = DateFinder(base_date=base_date, first=first)
-    return date_finder.find_dates(text, source=source, index=index, strict=strict)
+    return date_finder.find_dates(text, source=source, index=index, strict=strict, show_strings=show_strings)
