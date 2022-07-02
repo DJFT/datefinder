@@ -101,9 +101,6 @@ DATES_PATTERN = """
         |
         (?P<positionnal_tokens>{positionnal_tokens})
         |
-        ## These tokens could be in phrases that dateutil does not yet recognize
-        ## Some are US Centric
-        (?P<extra_tokens>{extra_tokens})
     ## We need at least three items to match for minimal datetime parsing
     ## ie 10pm
     ){{1,1}}
@@ -121,7 +118,6 @@ DATES_PATTERN = DATES_PATTERN.format(
     months=MONTHS_PATTERN,
     delimiters=DELIMITERS_PATTERN,
     positionnal_tokens=POSITIONNAL_TOKENS,
-    extra_tokens=EXTRA_TOKENS_PATTERN,
 )
 
 ALL_GROUPS = ['time', 'years', 'numbers', 'digits', 'digits_suffixes', 'days',
